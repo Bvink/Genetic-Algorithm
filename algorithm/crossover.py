@@ -11,11 +11,14 @@ class Crossover:
                 child_dna.append([0] * DNA_SIZE)
 
                 if CROSSOVER_METHOD == SINGLE_POINT_CROSSOVER_INDEX:
-                    child_dna = self.single_point_crossover(parents, child_dna)
+                    Tester = type('Tester', (), {"test": lambda self, i: i < SINGLE_POINT_CROSSOVER_INDEX})
+                    child_dna = self.perform_crossover(parents, child_dna, Tester())
                 elif CROSSOVER_METHOD == TWO_POINT_CROSSOVER:
-                    child_dna = self.two_point_crossover(parents, child_dna)
+                    Tester = type('Tester', (), {"test": lambda self, i: i < TWO_POINT_CROSSOVER_INDICES[0] | i > TWO_POINT_CROSSOVER_INDICES[1]})
+                    child_dna = self.perform_crossover(parents, child_dna, Tester())
                 elif CROSSOVER_METHOD == UNIFORM_CROSSOVER:
-                    child_dna = self.uniform_crossover(parents, child_dna)
+                    Tester = type('Tester', (), {"test": lambda self, i: bool(randint(0, 1))})
+                    child_dna = self.perform_crossover(parents, child_dna, Tester())
 
                 children = list()
                 children.append(Individual(child_dna[0]))
@@ -23,33 +26,11 @@ class Crossover:
                 return children
             return parents
 
-    # Perform single point crossover to create children from two parents.
-    # Single point crossover is performed by taking bits from either parents based on a single crossover points.
-    def single_point_crossover(self, parents, child_dna):
+    # Perform crossover to create children from two parents.
+    def perform_crossover(self, parents, child_dna, tester):
         i = 0
         while i < DNA_SIZE:
-            test = i < SINGLE_POINT_CROSSOVER_INDEX
-            child_dna = self.cross(parents, child_dna, i, test)
-            i += 1
-        return child_dna
-
-    # Perform two point crossover to create children from two parents.
-    # Two point crossover is performed by taking bits from either parents based on two crossover points.
-    def two_point_crossover(self, parents, child_dna):
-        i = 0
-        while i < DNA_SIZE:
-            test = i < TWO_POINT_CROSSOVER_INDICES[0] | i > TWO_POINT_CROSSOVER_INDICES[1]
-            child_dna = self.cross(parents, child_dna, i, test)
-            i += 1
-        return child_dna
-
-    # Perform uniform crossover to create children from two parents.
-    # Uniform crossover is performed by randomly taking bits from either parents.
-    def uniform_crossover(self, parents, child_dna):
-        i = 0
-        while i < DNA_SIZE:
-            test = randint(0, 1) == 0
-            child_dna = self.cross(parents, child_dna, i, test)
+            child_dna = self.cross(parents, child_dna, i, tester.test(i))
             i += 1
         return child_dna
 

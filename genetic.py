@@ -29,4 +29,7 @@ class Genetic(object):
             i += 1
         return population
 
+import time
+start_time = time.time()
 gen = Genetic()
+print("--- %s seconds ---" % (time.time() - start_time))
