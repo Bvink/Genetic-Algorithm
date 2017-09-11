@@ -15,7 +15,7 @@ class Individual(object):
     def confirm_dna(self, dna):
         if len(dna) == DNA_SIZE:
             for i in dna:
-                if i == 1 | i == 0:
+                if not i == 1 or i == 0:
                     return bool(0)
             return bool(1)
         return bool(0)

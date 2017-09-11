@@ -14,7 +14,7 @@ class Crossover:
                     Tester = type('Tester', (), {"test": lambda self, i: i < SINGLE_POINT_CROSSOVER_INDEX})
                     child_dna = self.perform_crossover(parents, child_dna, Tester())
                 elif CROSSOVER_METHOD == TWO_POINT_CROSSOVER:
-                    Tester = type('Tester', (), {"test": lambda self, i: i < TWO_POINT_CROSSOVER_INDICES[0] | i > TWO_POINT_CROSSOVER_INDICES[1]})
+                    Tester = type('Tester', (), {"test": lambda self, i: TWO_POINT_CROSSOVER_INDICES[0] > i > TWO_POINT_CROSSOVER_INDICES[1]})
                     child_dna = self.perform_crossover(parents, child_dna, Tester())
                 elif CROSSOVER_METHOD == UNIFORM_CROSSOVER:
                     Tester = type('Tester', (), {"test": lambda self, i: bool(randint(0, 1))})
