@@ -36,7 +36,3 @@ def get_average_fitness(individuals):
     for ind in individuals:
         sum_val += ind.fitness
     return sum_val / POPULATION_SIZE
-
-
-def random_double(lowerbound, upperbound):
-    return uniform(lowerbound, upperbound)

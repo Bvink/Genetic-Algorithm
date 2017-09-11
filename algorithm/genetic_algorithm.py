@@ -20,13 +20,11 @@ class GeneticAlgorithm:
     def create_children(self, population):
         children = list()
         pairings = self.calc_pairings()
-        i = 0
-        while i < pairings:
+        for i in range(pairings):
             pair = self.pair_selector.select(population)
             new_children = self.crossover.crossover(pair)
             for child in new_children:
                 children.append(self.mutator.mutate(child))
-            i += 1
         return children
 
     # Calculate how many pairings there will be.
@@ -34,8 +32,8 @@ class GeneticAlgorithm:
     def calc_pairings(self):
         pairings = POPULATION_SIZE / 2
         if ELITISM:
-            pairings -= 1
-        return pairings
+            pairings -= 1 * (ELITISM_COUNT / 2)
+        return int(pairings)
 
     # Add the relevant amount of elites to the new generation.
     def add_elites(self, population):

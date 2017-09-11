@@ -27,10 +27,8 @@ class PairSelector:
     # Create a random group of individuals who will be put into a tournament.
     def create_tournament_pool(self, population):
         tournament_pool = list()
-        i = 0
-        while i < TOURNAMENT_SIZE:
+        for i in range(TOURNAMENT_SIZE):
             tournament_pool.append(population[randint(0, POPULATION_SIZE-1)])
-            i += 1
         return tournament_pool
 
     # Perform Roulette selection

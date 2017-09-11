@@ -28,10 +28,8 @@ class Crossover:
 
     # Perform crossover to create children from two parents.
     def perform_crossover(self, parents, child_dna, tester):
-        i = 0
-        while i < DNA_SIZE:
+        for i in range(DNA_SIZE):
             child_dna = self.cross(parents, child_dna, i, tester.test(i))
-            i += 1
         return child_dna
 
     # Perform the crossover on a single bit of DNA.
